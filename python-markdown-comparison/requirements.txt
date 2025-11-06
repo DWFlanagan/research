@@ -1,0 +1,11 @@
+# Markdown libraries to compare
+cmarkgfm>=2024.1.14
+markdown>=3.5
+mistune>=3.0.0
+mistletoe>=1.3.0
+markdown-it-py>=3.0.0
+
+# Benchmarking and visualization
+matplotlib>=3.8.0
+numpy>=1.26.0
+psutil>=5.9.0
