@@ -18,6 +18,21 @@ powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 
 ## Creating a new experiment
 
+### Quick start with templates
+
+1. **Copy the template**:
+   ```bash
+   cp -r templates/ experiments/my-experiment
+   cd experiments/my-experiment
+   ```
+
+2. **Customize the files**:
+   - Edit `README.md` to describe your experiment
+   - Update `pyproject.toml` with your experiment name and dependencies
+   - Write your code in `main.py` (or create new files)
+
+### Manual setup
+
 1. **Create a directory** in `experiments/` with a descriptive name:
    ```bash
    mkdir experiments/my-experiment

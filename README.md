@@ -8,6 +8,7 @@ This repository is a collection of experiments where I explore new ideas, test c
 
 <!-- experiments start -->
 - **[hello-world](experiments/hello-world)** - Hello World
+- **[web-scraper-example](experiments/web-scraper-example)** - Web Scraper Example
 <!-- experiments end -->
 
 ## How to add a new experiment
