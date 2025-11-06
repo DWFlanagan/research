@@ -1,0 +1,65 @@
+BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding
+Abstract
+We introduce a new language representation model called BERT, which stands for Bidirectional
+Encoder Representations from Transformers. Unlike recent language representation models, BERT is
+designed to pre-train deep bidirectional representations from unlabeled text by jointly conditioning on
+both left and right context in all layers. As a result, the pre-trained BERT model can be fine-tuned with
+just one additional output layer to create state-of-the-art models for a wide range of tasks.
+BERT is conceptually simple and empirically powerful. It obtains new state-of-the-art results on eleven
+natural language processing tasks, including pushing the GLUE score to 80.5%, MultiNLI accuracy to
+86.7%, SQuAD v1.1 question answering Test F1 to 93.2, and SQuAD v2.0 Test F1 to 83.1.
+1 Introduction
+Language model pre-training has been shown to be effective for improving many natural language
+processing tasks. These include sentence-level tasks such as natural language inference and
+paraphrasing, as well as token-level tasks such as named entity recognition and question answering.
+There are two existing strategies for applying pre-trained language representations to downstream
+tasks: feature-based and fine-tuning. The feature-based approach uses task-specific architectures that
+include the pre-trained representations as additional features. The fine-tuning approach introduces
+minimal task-specific parameters and is trained on the downstream tasks by simply fine-tuning all
+pre-trained parameters.
+We argue that current techniques restrict the power of the pre-trained representations, especially for
+the fine-tuning approaches. The major limitation is that standard language models are unidirectional,
+and this limits the choice of architectures that can be used during pre-training.
+In this paper, we improve the fine-tuning based approaches by proposing BERT: Bidirectional Encoder
+Representations from Transformers. BERT alleviates the previously mentioned unidirectionality
+constraint by using a "masked language model" (MLM) pre-training objective. The masked language
+model randomly masks some of the tokens from the input, and the objective is to predict the original
+vocabulary id of the masked word based only on its context.
+2 Related Work
+There is a long history of pre-training general language representations. Learning widely applicable
+representations of words has been an active area of research for decades. Pre-trained word
+embeddings are an integral part of modern NLP systems, offering significant improvements over
+embeddings learned from scratch.
+ELMo extracts context-sensitive features from a left-to-right and a right-to-left language model. The
+contextual representation of each token is the concatenation of the left-to-right and right-to-left
+representations.
+3 BERT
+
+We introduce BERT and its detailed implementation in this section. There are two steps in our
+framework: pre-training and fine-tuning. During pre-training, the model is trained on unlabeled data over
+different pre-training tasks. For fine-tuning, the BERT model is first initialized with the pre-trained
+parameters, and all of the parameters are fine-tuned using labeled data from the downstream tasks.
+Model Architecture: BERT's model architecture is a multi-layer bidirectional Transformer encoder. We
+denote the number of layers as L, the hidden size as H, and the number of self-attention heads as A.
+We report results on two model sizes: BERT_BASE (L=12, H=768, A=12, Total Parameters=110M) and
+BERT_LARGE (L=24, H=1024, A=16, Total Parameters=340M).
+Input/Output Representations: We use WordPiece embeddings with a 30,000 token vocabulary. The
+first token of every sequence is always a special classification token ([CLS]). Sentence pairs are
+packed together into a single sequence separated with a special token ([SEP]).
+3.1 Pre-training BERT
+We pre-train BERT using two unsupervised tasks: Masked LM and Next Sentence Prediction.
+Task #1: Masked LM - We simply mask some percentage of the input tokens at random, and then
+predict those masked tokens. We refer to this procedure as a "masked LM" (MLM). In all of our
+experiments, we mask 15% of all WordPiece tokens in each sequence at random.
+Task #2: Next Sentence Prediction (NSP) - Many important downstream tasks such as Question
+Answering (QA) and Natural Language Inference (NLI) are based on understanding the relationship
+between two sentences. We pre-train for a binarized next sentence prediction task.
+4 Experiments
+We present BERT fine-tuning results on 11 NLP tasks including GLUE, SQuAD v1.1, and SQuAD v2.0.
+4.1 GLUE
+Both BERT_BASE and BERT_LARGE outperform all systems on all tasks by a substantial margin,
+obtaining 4.5% and 7.0% respective average accuracy improvement over the prior state of the art.
+6 Conclusion
+Recent empirical improvements due to transfer learning with language models have demonstrated that
+rich, unsupervised pre-training is an integral part of many language understanding systems. Our major
+contribution is further generalizing these findings to deep bidirectional architectures.

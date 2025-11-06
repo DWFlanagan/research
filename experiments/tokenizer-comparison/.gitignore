@@ -1,0 +1,32 @@
+# Output directories (except example results/)
+output/
+sample_output/
+demo_output/
+
+# Downloaded PDFs
+pdfs/
+*.pdf
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Temporary files
+*.tmp
+*.log
