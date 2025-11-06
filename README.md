@@ -8,6 +8,7 @@ This repository is a collection of experiments where I explore new ideas, test c
 
 <!-- experiments start -->
 - **[hello-world](experiments/hello-world)** - Hello World
+- **[python-markdown-comparison](experiments/python-markdown-comparison)** - Python Markdown Libraries: Performance Benchmark & Feature Comparison
 - **[web-scraper-example](experiments/web-scraper-example)** - Web Scraper Example
 <!-- experiments end -->
 
