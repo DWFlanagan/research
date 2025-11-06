@@ -129,25 +129,53 @@ def get_abstract_fallback(arxiv_id: str) -> Optional[str]:
         Abstract text or None
     """
     try:
+        from bs4 import BeautifulSoup
+        
         url = f"https://arxiv.org/abs/{arxiv_id}"
         with httpx.Client(timeout=30, follow_redirects=True) as client:
             response = client.get(url)
             response.raise_for_status()
             content = response.text
             
-            # Simple extraction of abstract from HTML
-            match = re.search(
-                r'<blockquote class="abstract mathjax">.*?<span class="descriptor">Abstract:</span>\s*(.*?)</blockquote>',
-                content,
-                re.DOTALL
-            )
-            if match:
-                abstract = match.group(1).strip()
-                # Clean HTML tags
-                abstract = re.sub(r'<[^>]+>', '', abstract)
+            # Parse HTML with BeautifulSoup
+            soup = BeautifulSoup(content, 'html.parser')
+            
+            # Find abstract blockquote
+            abstract_block = soup.find('blockquote', class_='abstract')
+            if abstract_block:
+                # Remove the "Abstract:" descriptor
+                descriptor = abstract_block.find('span', class_='descriptor')
+                if descriptor:
+                    descriptor.decompose()
+                
+                # Get text and clean whitespace
+                abstract = abstract_block.get_text(strip=True)
                 abstract = re.sub(r'\s+', ' ', abstract)
                 logger.info(f"Fetched abstract for {arxiv_id}: {len(abstract)} chars")
                 return abstract
+    except ImportError:
+        logger.warning("BeautifulSoup not available, falling back to regex")
+        # Fallback to regex if BeautifulSoup not available
+        try:
+            url = f"https://arxiv.org/abs/{arxiv_id}"
+            with httpx.Client(timeout=30, follow_redirects=True) as client:
+                response = client.get(url)
+                response.raise_for_status()
+                content = response.text
+                
+                match = re.search(
+                    r'<blockquote class="abstract[^"]*">.*?<span class="descriptor">Abstract:</span>\s*(.*?)</blockquote>',
+                    content,
+                    re.DOTALL
+                )
+                if match:
+                    abstract = match.group(1).strip()
+                    abstract = re.sub(r'<[^>]+>', '', abstract)
+                    abstract = re.sub(r'\s+', ' ', abstract)
+                    logger.info(f"Fetched abstract for {arxiv_id}: {len(abstract)} chars")
+                    return abstract
+        except Exception as e:
+            logger.error(f"Regex fallback failed for {arxiv_id}: {e}")
     except Exception as e:
         logger.error(f"Failed to fetch abstract for {arxiv_id}: {e}")
     

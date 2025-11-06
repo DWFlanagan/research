@@ -42,8 +42,6 @@ def generate_plots(results: list[dict], output_dir: Path) -> None:
 
 def plot_tokens_per_1000_chars(df: pd.DataFrame, output_dir: Path) -> None:
     """Plot tokens per 1000 characters comparison."""
-    plt.figure(figsize=(12, 6))
-    
     # Group by tokenizer and paper
     pivot = df.pivot(index='paper', columns='tokenizer', values='tokens_per_1000_chars')
     
@@ -64,8 +62,6 @@ def plot_tokens_per_1000_chars(df: pd.DataFrame, output_dir: Path) -> None:
 
 def plot_tokens_per_100_words(df: pd.DataFrame, output_dir: Path) -> None:
     """Plot tokens per 100 words comparison."""
-    plt.figure(figsize=(12, 6))
-    
     # Group by tokenizer
     grouped = df.groupby('tokenizer')['tokens_per_100_words'].mean().sort_values()
     
@@ -113,8 +109,6 @@ def plot_reconstruction_similarity(df: pd.DataFrame, output_dir: Path) -> None:
 
 def plot_throughput(df: pd.DataFrame, output_dir: Path) -> None:
     """Plot tokenization throughput comparison."""
-    plt.figure(figsize=(12, 6))
-    
     # Group by tokenizer
     grouped = df.groupby('tokenizer')['throughput_tokens_per_sec'].mean().sort_values(ascending=False)
     
@@ -139,8 +133,6 @@ def plot_throughput(df: pd.DataFrame, output_dir: Path) -> None:
 
 def plot_token_length_distribution(df: pd.DataFrame, output_dir: Path) -> None:
     """Plot token length distribution."""
-    plt.figure(figsize=(12, 6))
-    
     # Use average and median token lengths
     metrics = ['avg_token_length', 'median_token_length']
     
