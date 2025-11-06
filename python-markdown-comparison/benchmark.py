@@ -4,7 +4,7 @@
 import time
 import tracemalloc
 import statistics
-from typing import Dict, List, Tuple, Callable
+from typing import Dict, List, Callable
 import json
 
 # Import all markdown libraries
@@ -48,7 +48,7 @@ except ImportError:
 from test_documents import ALL_DOCS
 
 
-def benchmark_function(func: Callable, text: str, iterations: int = 100) -> Tuple[float, float]:
+def benchmark_function(func: Callable, text: str, iterations: int = 100) -> tuple[float, float]:
     """
     Benchmark a function for speed and memory usage.
     
