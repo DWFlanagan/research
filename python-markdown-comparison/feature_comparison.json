@@ -1,0 +1,192 @@
+{
+  "cmarkgfm": {
+    "description": "Python bindings to GitHub's fork of cmark (CommonMark implementation in C)",
+    "implementation": "C with Python bindings",
+    "commonmark_compliant": true,
+    "gfm_support": true,
+    "features": {
+      "basic_markdown": true,
+      "tables": true,
+      "strikethrough": true,
+      "autolinks": true,
+      "task_lists": true,
+      "code_blocks": true,
+      "fenced_code": true,
+      "html_blocks": true,
+      "custom_extensions": false,
+      "plugins": false,
+      "multiple_renderers": false,
+      "ast_access": false
+    },
+    "pros": [
+      "Very fast (C implementation)",
+      "GitHub Flavored Markdown support out of the box",
+      "CommonMark compliant",
+      "Well-maintained by GitHub",
+      "Battle-tested in production"
+    ],
+    "cons": [
+      "Limited extensibility",
+      "No plugin system",
+      "Requires C compiler for building from source",
+      "Less flexible than pure Python solutions"
+    ],
+    "use_cases": [
+      "High-performance applications",
+      "GitHub-compatible markdown rendering",
+      "Production systems requiring speed"
+    ]
+  },
+  "markdown": {
+    "description": "The original Python-Markdown implementation, pure Python",
+    "implementation": "Pure Python",
+    "commonmark_compliant": false,
+    "gfm_support": false,
+    "features": {
+      "basic_markdown": true,
+      "tables": true,
+      "strikethrough": false,
+      "autolinks": true,
+      "task_lists": false,
+      "code_blocks": true,
+      "fenced_code": true,
+      "html_blocks": true,
+      "custom_extensions": true,
+      "plugins": true,
+      "multiple_renderers": false,
+      "ast_access": true
+    },
+    "pros": [
+      "Highly extensible with rich extension API",
+      "Many built-in and third-party extensions",
+      "Pure Python (easy to install)",
+      "Mature and stable",
+      "Good documentation"
+    ],
+    "cons": [
+      "Slower than C-based implementations",
+      "Not CommonMark compliant by default",
+      "Complex extension system",
+      "Memory usage can be higher"
+    ],
+    "use_cases": [
+      "Applications requiring custom markdown extensions",
+      "Python-only environments",
+      "When flexibility is more important than speed"
+    ]
+  },
+  "mistune": {
+    "description": "Fast and full-featured pure Python markdown parser",
+    "implementation": "Pure Python",
+    "commonmark_compliant": true,
+    "gfm_support": true,
+    "features": {
+      "basic_markdown": true,
+      "tables": true,
+      "strikethrough": true,
+      "autolinks": true,
+      "task_lists": true,
+      "code_blocks": true,
+      "fenced_code": true,
+      "html_blocks": true,
+      "custom_extensions": true,
+      "plugins": true,
+      "multiple_renderers": true,
+      "ast_access": true
+    },
+    "pros": [
+      "Fast (fastest pure Python implementation)",
+      "CommonMark compliant (v3+)",
+      "GFM support built-in",
+      "Plugin system for extensions",
+      "Multiple output formats (HTML, AST)",
+      "Pure Python"
+    ],
+    "cons": [
+      "API changed significantly in v3",
+      "Less mature than Python-Markdown",
+      "Smaller community/ecosystem"
+    ],
+    "use_cases": [
+      "High-performance pure Python applications",
+      "Projects needing both speed and extensibility",
+      "Modern CommonMark-compliant parsing"
+    ]
+  },
+  "mistletoe": {
+    "description": "Fast, extensible, spec-compliant Markdown parser in pure Python",
+    "implementation": "Pure Python",
+    "commonmark_compliant": true,
+    "gfm_support": true,
+    "features": {
+      "basic_markdown": true,
+      "tables": true,
+      "strikethrough": true,
+      "autolinks": true,
+      "task_lists": true,
+      "code_blocks": true,
+      "fenced_code": true,
+      "html_blocks": true,
+      "custom_extensions": true,
+      "plugins": false,
+      "multiple_renderers": true,
+      "ast_access": true
+    },
+    "pros": [
+      "Fast pure Python parser",
+      "CommonMark compliant",
+      "Multiple output formats (HTML, LaTeX, AST, etc.)",
+      "Easy to create custom tokens",
+      "Clean architecture",
+      "AST-based parsing"
+    ],
+    "cons": [
+      "Smaller community than Python-Markdown",
+      "Less documentation",
+      "Fewer third-party extensions"
+    ],
+    "use_cases": [
+      "Projects needing multiple output formats",
+      "Custom token definitions",
+      "Academic/research work"
+    ]
+  },
+  "markdown-it-py": {
+    "description": "Python port of markdown-it JavaScript parser",
+    "implementation": "Pure Python",
+    "commonmark_compliant": true,
+    "gfm_support": true,
+    "features": {
+      "basic_markdown": true,
+      "tables": true,
+      "strikethrough": true,
+      "autolinks": true,
+      "task_lists": true,
+      "code_blocks": true,
+      "fenced_code": true,
+      "html_blocks": true,
+      "custom_extensions": true,
+      "plugins": true,
+      "multiple_renderers": true,
+      "ast_access": true
+    },
+    "pros": [
+      "CommonMark compliant",
+      "Modern plugin architecture",
+      "Active development",
+      "Good performance for pure Python",
+      "Compatible with markdown-it ecosystem",
+      "Excellent security features"
+    ],
+    "cons": [
+      "Newer library (less mature)",
+      "Smaller ecosystem than Python-Markdown",
+      "Requires plugins for GFM features"
+    ],
+    "use_cases": [
+      "Modern CommonMark parsing",
+      "Projects requiring security",
+      "Applications using markdown-it in other languages"
+    ]
+  }
+}
