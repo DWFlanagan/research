@@ -156,7 +156,7 @@ async def run_experiment_sync(request: RunRequest):
             status_code=500,
             content={
                 "status": "failed",
-                "error": str(e),
+                "error": "An internal error occurred while running the comparison. Please check the server logs for details.",
             },
         )
 
@@ -201,7 +201,7 @@ async def run_comparison_task(
     except Exception as e:
         logger.error(f"Job {job_id} failed: {e}", exc_info=True)
         jobs[job_id]["status"] = "failed"
-        jobs[job_id]["error"] = str(e)
+        jobs[job_id]["error"] = "An internal error occurred while running the comparison. Please check the server logs for details."
 
 
 if __name__ == "__main__":
