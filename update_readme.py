@@ -23,15 +23,18 @@ def get_experiments():
         
         if readme_path.exists():
             content = readme_path.read_text('utf-8')
-            # Extract first line that's not a heading
+            # Extract description: first heading or first non-empty line
             for line in content.split('\n'):
                 line = line.strip()
-                if line and not line.startswith('#'):
-                    description = line
-                    break
-                # Or use the first heading
+                if not line:
+                    continue
+                # Use first heading if found
                 if line.startswith('# '):
                     description = line.lstrip('# ')
+                    break
+                # Otherwise use first non-heading line
+                if not line.startswith('#'):
+                    description = line
                     break
         
         experiments.append({

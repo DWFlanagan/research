@@ -11,7 +11,7 @@ This experiment shows how to:
 
 ```bash
 cd experiments/hello-world
-uv run hello.py
+uv run python hello.py
 ```
 
 ## What it does
