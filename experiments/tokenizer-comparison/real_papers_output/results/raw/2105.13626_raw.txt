@@ -1,0 +1,79 @@
+ByT5: Towards a token-free future with pre-trained byte-to-byte models
+Abstract
+Most widely-used pre-trained language models operate on sequences of tokens corresponding to word
+or subword units. Encoding text as a sequence of tokens requires a tokenizer, which is typically learned
+as an independent artifact from the model. Token-free models that instead operate directly on raw text
+(bytes or characters) have many benefits: they can process text in any language out of the box, they
+are more robust to noise, and they minimize technical debt by removing complex text preprocessing
+pipelines.
+Since byte or character sequences are longer than token sequences, past work on token-free models
+has often introduced new model architectures designed to amortize the cost of operating directly on raw
+text. In this paper, we show that a standard Transformer architecture can be used with minimal
+modifications to process byte sequences.
+1 Introduction
+Language models like BERT, GPT-3, and T5 have revolutionized natural language processing. These
+models are typically trained on tokenized text, where the input is first segmented into discrete tokens
+that often correspond to words or subword units. The tokenization is learned from a large corpus using
+methods like Byte-Pair Encoding (BPE), WordPiece, or SentencePiece.
+While tokenization has proven effective, it has fundamental limitations. First, the choice of tokenization
+is typically made independently from the model architecture. Second, tokenization can be brittle:
+models can behave unpredictably when faced with typos, novel words, or text from languages not
+well-represented in the tokenizer's training corpus. Third, tokenization adds substantial complexity to
+the training and deployment pipeline.
+These issues have motivated recent work on token-free models that operate directly on sequences of
+bytes or characters. Such models have several appealing properties: (1) they can handle text in any
+language without requiring language-specific preprocessing, (2) they are more robust to noise and
+novel text, and (3) they simplify the pipeline by removing the need for a separate tokenization artifact.
+However, processing byte or character sequences presents challenges. Byte sequences are
+significantly longer than token sequences (typically 3-8x longer), which increases computational cost.
+Past work has typically introduced specialized model architectures to address this.
+In this paper, we take a different approach: we show that a standard Transformer architecture can be
+used to process byte sequences with only minimal modifications. We adapt the T5 architecture to
+process UTF-8 bytes instead of tokens. We call the resulting models ByT5.
+2 Background
+Token-free Models: Operating on raw text instead of tokens has a long history in NLP. Early work
+included character-level CNNs and LSTMs. Recent work has explored character-level variants of the
+Transformer architecture.
+CANINE is a recent encoder-only model that operates directly on Unicode code points. CANINE
+introduces a "local attention" mechanism that only attends to nearby characters, which reduces
+
+computational cost. Charformer operates on characters but uses a downsampling mechanism to
+reduce sequence length.
+Our work differs in that we show that a standard Transformer architecture can effectively process byte
+sequences without specialized attention mechanisms or downsampling.
+3 Approach
+We base our models on T5, an encoder-decoder Transformer. We make only minor modifications to
+adapt T5 to process bytes:
+1. We remove the SentencePiece tokenizer and instead process raw UTF-8 bytes. 2. We increase the
+vocabulary size from 32,000 to 384 to account for the 256 possible byte values plus special tokens. 3.
+We increase the maximum sequence length to account for longer byte sequences.
+Model Sizes: We train ByT5 models in five sizes: Small, Base, Large, XL, and XXL. To ensure fair
+comparison, we try to match the number of training FLOPs rather than parameters. Since ByT5
+processes sequences about 4x longer, we reduce model depth to keep training costs comparable.
+Pre-training: We pre-train ByT5 using the same span corruption objective used by T5. The model is
+trained to reconstruct spans of consecutive bytes that have been replaced with sentinel tokens.
+4 Experimental Setup
+We evaluate ByT5 on diverse NLP tasks including GLUE, SuperGLUE, SQuAD, grammatical error
+correction, summarization, and entity typing.
+5 Results
+Performance: ByT5 is competitive with T5, achieving similar or slightly better performance on most
+tasks. For example, ByT5-Small achieves an average GLUE score of 82.6, compared to 82.2 for
+T5-Small.
+Robustness to Noise: ByT5 is significantly more robust to all types of noise compared to T5. When we
+randomly drop 10% of characters, T5-Base's GLUE score drops by 8.2 points, while ByT5-Base's score
+only drops by 3.1 points.
+This robustness is likely because byte-level models don't rely on a fixed vocabulary. When a
+token-level model encounters a typo, it may map the word to an "unknown" token. Byte-level models
+can process any byte sequence.
+Efficiency: ByT5 is generally slower than T5, both during training and inference. However, these
+efficiency differences are relatively modest considering that ByT5 processes sequences that are 4x
+longer.
+6 Conclusion
+We introduced ByT5, a token-free model that operates directly on UTF-8 bytes. We showed that a
+standard Transformer architecture can effectively process byte sequences, achieving competitive
+performance with token-level models on diverse NLP tasks. We demonstrated that byte-level models
+
+are significantly more robust to noise.
+Our results suggest that byte-level models are compelling alternatives to token-level models, especially
+for applications where robustness, simplicity, and multilingual capabilities are important. To promote
+research on token-free models, we release ByT5 models in five sizes.
