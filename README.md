@@ -13,7 +13,15 @@ This repository is a collection of experiments where I explore new ideas, test c
 
 ## How to add a new experiment
 
+**Quick start:**
+```bash
+python new_experiment.py "My Experiment Name"
+```
+
+Or manually:
 1. Create a new directory in `experiments/` with a descriptive name
 2. Add a `README.md` in your experiment directory describing what it does
 3. If using Python, add a `pyproject.toml` or requirements file
 4. Push your changes - the GitHub Actions workflow will automatically update this README
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions.
